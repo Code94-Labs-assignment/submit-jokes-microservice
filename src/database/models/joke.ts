@@ -1,5 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
 
+export enum JokeStatus {
+  Pending = "Pending",
+  Approved = "Approved",
+  Disapproved = "Disapproved",
+}
+
 export interface IJoke extends Document {
   setup: string;
   punchline: string;
@@ -8,6 +14,7 @@ export interface IJoke extends Document {
     name: string;
   };
   author: string;
+  status: JokeStatus;
 }
 
 const JokeSchema: Schema = new Schema({
@@ -18,6 +25,11 @@ const JokeSchema: Schema = new Schema({
     name: { type: String, required: true },
   },
   author: { type: String, default: "Anonymous" },
+  status: {
+    type: String,
+    enum: Object.values(JokeStatus), // Use the enum values
+    default: JokeStatus.Pending, // Set the default status
+  },
 });
 
 export const Joke = mongoose.model<IJoke>("Joke", JokeSchema);

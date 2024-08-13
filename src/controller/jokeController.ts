@@ -10,7 +10,17 @@ import logger from "../utils/logger";
 
 export const submitJoke = async (req: Request, res: Response) => {
   try {
-    const response = await submitJokeService(req.body);
+    const { setup, punchline, type, author } = req.body;
+
+    if (!type || !type._id || !type.name) {
+      return res.status(400).send({ message: "Invalid type provided" });
+    }
+    const response = await submitJokeService({
+      setup,
+      punchline,
+      type,
+      author,
+    });
     res.status(response.code).send(response);
   } catch (error: any) {
     logger.error(`Error submitting joke: ${error.message}`);
