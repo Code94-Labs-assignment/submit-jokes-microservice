@@ -72,9 +72,15 @@ jokeRouter.get("/", getAllJokes);
  *               punchline:
  *                 type: string
  *                 example: "To get to the other side!"
- *               typeId:
- *                 type: string
- *                 example: "60c72b2f4f1a2c001c8e4f34"
+ *               type:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     example: "60c72b2f4f1a2c001c8e4f34"
+ *                   name:
+ *                     type: string
+ *                     example: "Programming"
  *               author:
  *                 type: string
  *                 example: "Anonymous"
