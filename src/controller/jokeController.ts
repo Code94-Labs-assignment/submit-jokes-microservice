@@ -10,10 +10,10 @@ import {
   updateJokeService,
 } from "../service/jokeService";
 import logger from "../utils/logger";
-import { AppError, BadRequestError, NotFoundError } from "../models/errors"; // Import your custom errors
+import { BadRequestError } from "../models/errors";
 
 export const submitJoke = async (req: Request, res: Response) => {
-  logger.info("Controller - submitJoke: Start", { body: req.body });
+  logger.info(`Controller - submitJoke: Start - ${JSON.stringify(req.body)}`);
 
   try {
     const { setup, punchline, type, author } = req.body;
@@ -28,11 +28,12 @@ export const submitJoke = async (req: Request, res: Response) => {
       type,
       author,
     });
-    logger.info("Controller - submitJoke: Success", { response });
+    logger.info(
+      `Controller - submitJoke: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - submitJoke: Error", {
-      message: error.message,
+    logger.error(`Controller - submitJoke: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -46,11 +47,12 @@ export const getAllJokes = async (req: Request, res: Response) => {
 
   try {
     const response = await getAllJokesService();
-    logger.info("Controller - getAllJokes: Success", { response });
+    logger.info(
+      `Controller - getAllJokes: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - getAllJokes: Error", {
-      message: error.message,
+    logger.error(`Controller - getAllJokes: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -64,11 +66,12 @@ export const getJokeTypes = async (req: Request, res: Response) => {
 
   try {
     const response = await getJokeTypesService();
-    logger.info("Controller - getJokeTypes: Success", { response });
+    logger.info(
+      `Controller - getJokeTypes: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - getJokeTypes: Error", {
-      message: error.message,
+    logger.error(`Controller - getJokeTypes: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -78,15 +81,18 @@ export const getJokeTypes = async (req: Request, res: Response) => {
 };
 
 export const createJokeType = async (req: Request, res: Response) => {
-  logger.info("Controller - createJokeType: Start", { body: req.body });
+  logger.info(
+    `Controller - createJokeType: Start - ${JSON.stringify(req.body)}`,
+  );
 
   try {
     const response = await createJokeTypeService(req.body);
-    logger.info("Controller - createJokeType: Success", { response });
+    logger.info(
+      `Controller - createJokeType: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - createJokeType: Error", {
-      message: error.message,
+    logger.error(`Controller - createJokeType: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -100,11 +106,12 @@ export const getPendingJokes = async (req: Request, res: Response) => {
 
   try {
     const response = await getPendingJokesService();
-    logger.info("Controller - getPendingJokes: Success", { response });
+    logger.info(
+      `Controller - getPendingJokes: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - getPendingJokes: Error", {
-      message: error.message,
+    logger.error(`Controller - getPendingJokes: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -114,18 +121,18 @@ export const getPendingJokes = async (req: Request, res: Response) => {
 };
 
 export const updateJoke = async (req: Request, res: Response) => {
-  logger.info("Controller - updateJoke: Start", {
-    id: req.params.id,
-    body: req.body,
-  });
+  logger.info(
+    `Controller - updateJoke: Start - ID: ${req.params.id}, Body: ${JSON.stringify(req.body)}`,
+  );
 
   try {
     const response = await updateJokeService(req.params.id, req.body);
-    logger.info("Controller - updateJoke: Success", { response });
+    logger.info(
+      `Controller - updateJoke: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - updateJoke: Error", {
-      message: error.message,
+    logger.error(`Controller - updateJoke: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -135,16 +142,16 @@ export const updateJoke = async (req: Request, res: Response) => {
 };
 
 export const approveJoke = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  logger.info(`Controller - approveJoke: Start - ID: ${id}`);
+  logger.info(`Controller - approveJoke: Start - ID: ${req.params.id}`);
 
   try {
-    const response = await approveJokeService(id);
-    logger.info("Controller - approveJoke: Success", { response });
+    const response = await approveJokeService(req.params.id);
+    logger.info(
+      `Controller - approveJoke: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - approveJoke: Error", {
-      message: error.message,
+    logger.error(`Controller - approveJoke: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res
@@ -154,15 +161,16 @@ export const approveJoke = async (req: Request, res: Response) => {
 };
 
 export const rejectJoke = async (req: Request, res: Response) => {
-  logger.info("Controller - rejectJoke: Start", { id: req.params.id });
+  logger.info(`Controller - rejectJoke: Start - ID: ${req.params.id}`);
 
   try {
     const response = await rejectJokeService(req.params.id);
-    logger.info("Controller - rejectJoke: Success", { response });
+    logger.info(
+      `Controller - rejectJoke: Success - ${JSON.stringify(response)}`,
+    );
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - rejectJoke: Error", {
-      message: error.message,
+    logger.error(`Controller - rejectJoke: Error - ${error.message}`, {
       stack: error.stack,
     });
     return res

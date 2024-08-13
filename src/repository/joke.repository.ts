@@ -5,17 +5,16 @@ import logger from "../utils/logger";
 
 export class JokeRepository {
   async createJoke(joke: Partial<IJoke>) {
-    logger.info("Repository - createJoke: Start", { joke });
+    logger.info(`Repository - createJoke: Start - ${JSON.stringify(joke)}`);
     try {
       const newJoke = new Joke(joke);
       const savedJoke = await newJoke.save();
-      logger.info("Repository - createJoke: Success", {
-        jokeId: savedJoke._id,
-      });
+      logger.info(
+        `Repository - createJoke: Success - ${JSON.stringify({ jokeId: savedJoke._id })}`,
+      );
       return savedJoke;
     } catch (error: any) {
-      logger.error("Repository - createJoke: Error", {
-        message: error.message,
+      logger.error(`Repository - createJoke: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not create joke");
@@ -26,11 +25,12 @@ export class JokeRepository {
     logger.info("Repository - getAllJokes: Start");
     try {
       const jokes = await Joke.find().populate("type", "name");
-      logger.info("Repository - getAllJokes: Success", { jokes });
+      logger.info(
+        `Repository - getAllJokes: Success - ${JSON.stringify({ jokes })}`,
+      );
       return jokes;
     } catch (error: any) {
-      logger.error("Repository - getAllJokes: Error", {
-        message: error.message,
+      logger.error(`Repository - getAllJokes: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not retrieve jokes");
@@ -41,11 +41,12 @@ export class JokeRepository {
     logger.info("Repository - getJokeTypes: Start");
     try {
       const jokeTypes = await JokeType.find();
-      logger.info("Repository - getJokeTypes: Success", { jokeTypes });
+      logger.info(
+        `Repository - getJokeTypes: Success - ${JSON.stringify({ jokeTypes })}`,
+      );
       return jokeTypes;
     } catch (error: any) {
-      logger.error("Repository - getJokeTypes: Error", {
-        message: error.message,
+      logger.error(`Repository - getJokeTypes: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not retrieve joke types");
@@ -53,17 +54,18 @@ export class JokeRepository {
   }
 
   async createJokeType(jokeTypeData: Partial<IJokeType>) {
-    logger.info("Repository - createJokeType: Start", { jokeTypeData });
+    logger.info(
+      `Repository - createJokeType: Start - ${JSON.stringify(jokeTypeData)}`,
+    );
     try {
       const newJokeType = new JokeType(jokeTypeData);
       const savedJokeType = await newJokeType.save();
-      logger.info("Repository - createJokeType: Success", {
-        jokeTypeId: savedJokeType._id,
-      });
+      logger.info(
+        `Repository - createJokeType: Success - ${JSON.stringify({ jokeTypeId: savedJokeType._id })}`,
+      );
       return savedJokeType;
     } catch (error: any) {
-      logger.error("Repository - createJokeType: Error", {
-        message: error.message,
+      logger.error(`Repository - createJokeType: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not create joke type");
@@ -76,11 +78,12 @@ export class JokeRepository {
       const pendingJokes = await Joke.find({
         status: JokeStatus.Pending,
       }).populate("type", "name");
-      logger.info("Repository - getPendingJokes: Success", { pendingJokes });
+      logger.info(
+        `Repository - getPendingJokes: Success - ${JSON.stringify({ pendingJokes })}`,
+      );
       return pendingJokes;
     } catch (error: any) {
-      logger.error("Repository - getPendingJokes: Error", {
-        message: error.message,
+      logger.error(`Repository - getPendingJokes: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not retrieve pending jokes");
@@ -88,21 +91,23 @@ export class JokeRepository {
   }
 
   async updateJoke(id: string, jokeData: Partial<IJoke>) {
-    logger.info("Repository - updateJoke: Start", { id, jokeData });
+    logger.info(
+      `Repository - updateJoke: Start - ID: ${id}, Data: ${JSON.stringify(jokeData)}`,
+    );
     try {
       const updatedJoke = await Joke.findByIdAndUpdate(id, jokeData, {
         new: true,
       });
       if (!updatedJoke) {
-        logger.warn("Repository - updateJoke: Not Found", { jokeId: id });
+        logger.warn(`Repository - updateJoke: Not Found - ID: ${id}`);
         throw new Error("Joke not found");
       }
-      logger.info("Repository - updateJoke: Success", { updatedJoke });
+      logger.info(
+        `Repository - updateJoke: Success - ${JSON.stringify({ updatedJoke })}`,
+      );
       return updatedJoke;
     } catch (error: any) {
-      logger.error("Repository - updateJoke: Error", {
-        jokeId: id,
-        message: error.message,
+      logger.error(`Repository - updateJoke: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not update joke");
@@ -110,7 +115,7 @@ export class JokeRepository {
   }
 
   async approveJoke(id: string) {
-    logger.info("Repository - approveJoke: Start", { id });
+    logger.info(`Repository - approveJoke: Start - ID: ${id}`);
     try {
       const approvedJoke = await Joke.findByIdAndUpdate(
         new mongoose.Types.ObjectId(id),
@@ -119,16 +124,16 @@ export class JokeRepository {
       );
 
       if (!approvedJoke) {
-        logger.warn("Repository - approveJoke: Not Found", { jokeId: id });
+        logger.warn(`Repository - approveJoke: Not Found - ID: ${id}`);
         throw new Error("Joke not found");
       }
 
-      logger.info("Repository - approveJoke: Success", { approvedJoke });
+      logger.info(
+        `Repository - approveJoke: Success - ${JSON.stringify({ approvedJoke })}`,
+      );
       return approvedJoke;
     } catch (error: any) {
-      logger.error("Repository - approveJoke: Error", {
-        jokeId: id,
-        message: error.message,
+      logger.error(`Repository - approveJoke: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not approve joke");
@@ -136,19 +141,19 @@ export class JokeRepository {
   }
 
   async deleteJoke(id: string) {
-    logger.info("Repository - deleteJoke: Start", { id });
+    logger.info(`Repository - deleteJoke: Start - ID: ${id}`);
     try {
       const deletedJoke = await Joke.findByIdAndDelete(id);
       if (!deletedJoke) {
-        logger.warn("Repository - deleteJoke: Not Found", { jokeId: id });
+        logger.warn(`Repository - deleteJoke: Not Found - ID: ${id}`);
         throw new Error("Joke not found");
       }
-      logger.info("Repository - deleteJoke: Success", { jokeId: id });
+      logger.info(
+        `Repository - deleteJoke: Success - ${JSON.stringify({ jokeId: id })}`,
+      );
       return deletedJoke;
     } catch (error: any) {
-      logger.error("Repository - deleteJoke: Error", {
-        jokeId: id,
-        message: error.message,
+      logger.error(`Repository - deleteJoke: Error - ${error.message}`, {
         stack: error.stack,
       });
       throw new Error("Could not delete joke");
