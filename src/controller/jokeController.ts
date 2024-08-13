@@ -1,4 +1,3 @@
-// src/controllers/joke.controller.ts
 import { Request, Response } from "express";
 import {
   submitJokeService,
@@ -11,93 +10,115 @@ import {
   updateJokeService,
 } from "../service/jokeService";
 import logger from "../utils/logger";
+import { AppError, BadRequestError, NotFoundError } from "../models/errors"; // Import your custom errors
 
 export const submitJoke = async (req: Request, res: Response) => {
+  logger.info("Controller - submitJoke: Start", { body: req.body });
+
   try {
     const { setup, punchline, type, author } = req.body;
 
     if (!type || !type._id || !type.name) {
-      return res.status(400).send({ message: "Invalid type provided" });
+      throw new BadRequestError("Invalid type provided");
     }
-    const response = await submitJokeService({
-      setup,
-      punchline,
-      type,
-      author,
-    });
-    res.status(response.code).send(response);
+
+    const response = await submitJokeService({ setup, punchline, type, author });
+    logger.info("Controller - submitJoke: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error submitting joke: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - submitJoke: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const getAllJokes = async (req: Request, res: Response) => {
+  logger.info("Controller - getAllJokes: Start");
+
   try {
     const response = await getAllJokesService();
-    res.status(response.code).send(response);
+    logger.info("Controller - getAllJokes: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error fetching jokes: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - getAllJokes: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const getJokeTypes = async (req: Request, res: Response) => {
+  logger.info("Controller - getJokeTypes: Start");
+
   try {
     const response = await getJokeTypesService();
-    res.status(response.code).send(response);
+    logger.info("Controller - getJokeTypes: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error fetching joke types: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - getJokeTypes: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const createJokeType = async (req: Request, res: Response) => {
+  logger.info("Controller - createJokeType: Start", { body: req.body });
+
   try {
     const response = await createJokeTypeService(req.body);
-    res.status(response.code).send(response);
+    logger.info("Controller - createJokeType: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error creating joke type: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - createJokeType: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const getPendingJokes = async (req: Request, res: Response) => {
+  logger.info("Controller - getPendingJokes: Start");
+
   try {
     const response = await getPendingJokesService();
-    res.status(response.code).send(response);
+    logger.info("Controller - getPendingJokes: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error fetching pending jokes: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - getPendingJokes: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const updateJoke = async (req: Request, res: Response) => {
+  logger.info("Controller - updateJoke: Start", { id: req.params.id, body: req.body });
+
   try {
     const response = await updateJokeService(req.params.id, req.body);
-    res.status(response.code).send(response);
+    logger.info("Controller - updateJoke: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error updating joke: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - updateJoke: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const approveJoke = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  logger.info(`Controller - approveJoke: Start - ID: ${id}`);
+
   try {
-    const response = await approveJokeService(req.params.id);
-    res.status(response.code).send(response);
+    const response = await approveJokeService(id);
+    logger.info("Controller - approveJoke: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error approving joke: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - approveJoke: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const rejectJoke = async (req: Request, res: Response) => {
+  logger.info("Controller - rejectJoke: Start", { id: req.params.id });
+
   try {
     const response = await rejectJokeService(req.params.id);
-    res.status(response.code).send(response);
+    logger.info("Controller - rejectJoke: Success", { response });
+    return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error(`Error rejecting joke: ${error.message}`);
-    res.status(500).send({ message: "Internal Server Error" });
+    logger.error("Controller - rejectJoke: Error", { message: error.message, stack: error.stack });
+    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
   }
 };

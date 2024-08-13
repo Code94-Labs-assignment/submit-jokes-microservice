@@ -233,7 +233,7 @@ jokeRouter.get("/pending", getPendingJokes);
 
 /**
  * @swagger
- * /jokes/:id/update:
+ * /jokes/{id}/update:
  *   put:
  *     summary: Update a joke
  *     description: Update an existing joke by ID.
@@ -303,8 +303,8 @@ jokeRouter.put("/:id/update", updateJoke);
 
 /**
  * @swagger
- * /jokes/:id/approve:
- *   post:
+ * /jokes/{id}/approve:
+ *   put:
  *     summary: Approve a joke
  *     description: Approve an existing joke by ID.
  *     tags:
@@ -332,12 +332,12 @@ jokeRouter.put("/:id/update", updateJoke);
  *       500:
  *         description: Internal server error
  */
-jokeRouter.post("/:id/approve", approveJoke);
+jokeRouter.put("/:id/approve", approveJoke);
 
 /**
  * @swagger
- * /jokes/:id/reject:
- *   post:
+ * /jokes/{id}/reject:
+ *   put:
  *     summary: Reject a joke
  *     description: Reject an existing joke by ID.
  *     tags:
@@ -365,6 +365,6 @@ jokeRouter.post("/:id/approve", approveJoke);
  *       500:
  *         description: Internal server error
  */
-jokeRouter.post("/:id/reject", rejectJoke);
+jokeRouter.put("/:id/reject", rejectJoke);
 
 export default jokeRouter;
