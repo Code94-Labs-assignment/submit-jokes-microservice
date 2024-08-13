@@ -1,4 +1,3 @@
-// src/services/joke.service.ts
 import { JokeRepository } from "../repository/joke.repository";
 import { responseFormate } from "../models/response";
 import { IJoke } from "../database/models/joke";
@@ -65,6 +64,80 @@ export const createJokeTypeService = async (
     return {
       code: 500,
       message: "Error creating joke type",
+      error: error.message,
+    };
+  }
+};
+
+export const getPendingJokesService = async (): Promise<responseFormate> => {
+  try {
+    const pendingJokes = await jokeRepo.getPendingJokes(); // Implement this method in the repository
+    return {
+      code: 200,
+      data: pendingJokes,
+      message: "Pending jokes fetched successfully.",
+    };
+  } catch (error: any) {
+    return {
+      code: 500,
+      message: "Error fetching pending jokes",
+      error: error.message,
+    };
+  }
+};
+
+export const updateJokeService = async (
+  id: string,
+  jokeData: Partial<IJoke>,
+): Promise<responseFormate> => {
+  try {
+    const updatedJoke = await jokeRepo.updateJoke(id, jokeData); // Implement this method in the repository
+    return {
+      code: 200,
+      data: updatedJoke,
+      message: "Joke updated successfully.",
+    };
+  } catch (error: any) {
+    return {
+      code: 500,
+      message: "Error updating joke",
+      error: error.message,
+    };
+  }
+};
+
+export const approveJokeService = async (
+  id: string,
+): Promise<responseFormate> => {
+  try {
+    const approvedJoke = await jokeRepo.approveJoke(id); // Implement this method in the repository
+    return {
+      code: 200,
+      data: approvedJoke,
+      message: "Joke approved successfully.",
+    };
+  } catch (error: any) {
+    return {
+      code: 500,
+      message: "Error approving joke",
+      error: error.message,
+    };
+  }
+};
+
+export const rejectJokeService = async (
+  id: string,
+): Promise<responseFormate> => {
+  try {
+    await jokeRepo.deleteJoke(id); // Implement this method in the repository to delete the joke
+    return {
+      code: 200,
+      message: "Joke rejected and deleted successfully.",
+    };
+  } catch (error: any) {
+    return {
+      code: 500,
+      message: "Error rejecting joke",
       error: error.message,
     };
   }

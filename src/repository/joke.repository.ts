@@ -1,4 +1,3 @@
-// src/repository/joke.repository.ts
 import { Joke, IJoke } from "../database/models/joke";
 import { JokeType, IJokeType } from "../database/models/JokeType";
 
@@ -9,7 +8,7 @@ export class JokeRepository {
   }
 
   async getAllJokes() {
-    return Joke.find().populate("type", "name"); // Populate the type field with the joke type name
+    return Joke.find().populate("type", "name");
   }
 
   async getJokeTypes() {
@@ -19,5 +18,21 @@ export class JokeRepository {
   async createJokeType(jokeTypeData: Partial<IJokeType>) {
     const newJokeType = new JokeType(jokeTypeData);
     return newJokeType.save();
+  }
+
+  async getPendingJokes() {
+    return Joke.find({ status: "Pending" }).populate("type", "name");
+  }
+
+  async updateJoke(id: string, jokeData: Partial<IJoke>) {
+    return Joke.findByIdAndUpdate(id, jokeData, { new: true });
+  }
+
+  async approveJoke(id: string) {
+    return Joke.findByIdAndUpdate(id, { status: "Approved" }, { new: true });
+  }
+
+  async deleteJoke(id: string) {
+    return Joke.findByIdAndDelete(id);
   }
 }
