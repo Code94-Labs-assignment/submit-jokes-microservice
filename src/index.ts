@@ -12,16 +12,16 @@ const app = express();
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: '*', // Allow all origins. You can restrict this to specific domains.
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-}));
-
+app.use(
+  cors({
+    origin: "*", // Allow all origins. You can restrict this to specific domains.
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+  }),
+);
 
 // Swagger setup
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 
 // Routes
 app.use("/api/jokes", jokeRouter); // Use the joke routes

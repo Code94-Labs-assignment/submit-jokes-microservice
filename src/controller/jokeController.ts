@@ -22,12 +22,22 @@ export const submitJoke = async (req: Request, res: Response) => {
       throw new BadRequestError("Invalid type provided");
     }
 
-    const response = await submitJokeService({ setup, punchline, type, author });
+    const response = await submitJokeService({
+      setup,
+      punchline,
+      type,
+      author,
+    });
     logger.info("Controller - submitJoke: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - submitJoke: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - submitJoke: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -39,8 +49,13 @@ export const getAllJokes = async (req: Request, res: Response) => {
     logger.info("Controller - getAllJokes: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - getAllJokes: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - getAllJokes: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -52,8 +67,13 @@ export const getJokeTypes = async (req: Request, res: Response) => {
     logger.info("Controller - getJokeTypes: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - getJokeTypes: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - getJokeTypes: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -65,8 +85,13 @@ export const createJokeType = async (req: Request, res: Response) => {
     logger.info("Controller - createJokeType: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - createJokeType: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - createJokeType: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -78,21 +103,34 @@ export const getPendingJokes = async (req: Request, res: Response) => {
     logger.info("Controller - getPendingJokes: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - getPendingJokes: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - getPendingJokes: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
 export const updateJoke = async (req: Request, res: Response) => {
-  logger.info("Controller - updateJoke: Start", { id: req.params.id, body: req.body });
+  logger.info("Controller - updateJoke: Start", {
+    id: req.params.id,
+    body: req.body,
+  });
 
   try {
     const response = await updateJokeService(req.params.id, req.body);
     logger.info("Controller - updateJoke: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - updateJoke: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - updateJoke: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -105,8 +143,13 @@ export const approveJoke = async (req: Request, res: Response) => {
     logger.info("Controller - approveJoke: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - approveJoke: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - approveJoke: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -118,7 +161,12 @@ export const rejectJoke = async (req: Request, res: Response) => {
     logger.info("Controller - rejectJoke: Success", { response });
     return res.status(response.code).send(response);
   } catch (error: any) {
-    logger.error("Controller - rejectJoke: Error", { message: error.message, stack: error.stack });
-    return res.status(error.statusCode || 500).send({ message: error.message || "Internal Server Error" });
+    logger.error("Controller - rejectJoke: Error", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return res
+      .status(error.statusCode || 500)
+      .send({ message: error.message || "Internal Server Error" });
   }
 };
