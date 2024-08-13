@@ -1,6 +1,6 @@
 // src/repository/joke.repository.ts
-import { Joke, IJoke } from '../database/models/joke';
-import { JokeType, IJokeType } from '../database/models/JokeType';
+import { Joke, IJoke } from "../database/models/joke";
+import { JokeType, IJokeType } from "../database/models/JokeType";
 
 export class JokeRepository {
   async createJoke(joke: Partial<IJoke>) {
@@ -9,7 +9,7 @@ export class JokeRepository {
   }
 
   async getAllJokes() {
-    return Joke.find().populate('type', 'name'); // Populate the type field with the joke type name
+    return Joke.find().populate("type", "name"); // Populate the type field with the joke type name
   }
 
   async getJokeTypes() {

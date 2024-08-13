@@ -1,6 +1,11 @@
 // src/routes/joke.routes.ts
-import { Router } from 'express';
-import { submitJoke, getAllJokes, getJokeTypes, createJokeType } from '../controller/jokeController';
+import { Router } from "express";
+import {
+  submitJoke,
+  getAllJokes,
+  getJokeTypes,
+  createJokeType,
+} from "../controller/jokeController";
 
 const jokeRouter = Router();
 
@@ -44,7 +49,7 @@ const jokeRouter = Router();
  *                     type: string
  *                     example: "Anonymous"
  */
-jokeRouter.get('/', getAllJokes);
+jokeRouter.get("/", getAllJokes);
 
 /**
  * @swagger
@@ -107,7 +112,7 @@ jokeRouter.get('/', getAllJokes);
  *       500:
  *         description: Internal server error
  */
-jokeRouter.post('/create', submitJoke);
+jokeRouter.post("/create", submitJoke);
 
 /**
  * @swagger
@@ -134,7 +139,7 @@ jokeRouter.post('/create', submitJoke);
  *                     type: string
  *                     example: "Programming"
  */
-jokeRouter.get('/types', getJokeTypes);
+jokeRouter.get("/types", getJokeTypes);
 
 /**
  * @swagger
@@ -173,6 +178,6 @@ jokeRouter.get('/types', getJokeTypes);
  *       500:
  *         description: Internal server error
  */
-jokeRouter.post('/types/create', createJokeType);
+jokeRouter.post("/types/create", createJokeType);
 
 export default jokeRouter;

@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface IJoke extends Document {
   setup: string;
@@ -13,11 +13,11 @@ export interface IJoke extends Document {
 const JokeSchema: Schema = new Schema({
   setup: { type: String, required: true },
   punchline: { type: String, required: true },
-  type: { 
-    _id: { type: Schema.Types.ObjectId, ref: 'JokeType', required: true },
-    name: { type: String, required: true }
+  type: {
+    _id: { type: Schema.Types.ObjectId, ref: "JokeType", required: true },
+    name: { type: String, required: true },
   },
-  author: { type: String, default: 'Anonymous' },
+  author: { type: String, default: "Anonymous" },
 });
 
-export const Joke = mongoose.model<IJoke>('Joke', JokeSchema);
+export const Joke = mongoose.model<IJoke>("Joke", JokeSchema);

@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface IJokeType extends Document {
   _id: mongoose.Types.ObjectId;
@@ -9,4 +9,4 @@ const JokeTypeSchema: Schema = new Schema({
   name: { type: String, required: true, unique: true },
 });
 
-export const JokeType = mongoose.model<IJokeType>('JokeType', JokeTypeSchema);
+export const JokeType = mongoose.model<IJokeType>("JokeType", JokeTypeSchema);
