@@ -75,13 +75,15 @@ export class JokeRepository {
   async getPendingJokes() {
     logger.info("Repository - getPendingJokes: Start");
     try {
-      const pendingJokes = await Joke.find({
+      const pendingJoke  = await Joke.findOne({
         status: JokeStatus.Pending,
       }).populate("type", "name");
-      logger.info(
-        `Repository - getPendingJokes: Success - ${JSON.stringify({ pendingJokes })}`,
-      );
-      return pendingJokes;
+      if (pendingJoke ) {
+        logger.info(`Repository - getPendingJokes: Success - ${JSON.stringify({ pendingJoke })}`);
+      } else {
+        logger.info('Repository - getPendingJokes: No pending jokes found');
+      }
+      return pendingJoke ;
     } catch (error: any) {
       logger.error(`Repository - getPendingJokes: Error - ${error.message}`, {
         stack: error.stack,

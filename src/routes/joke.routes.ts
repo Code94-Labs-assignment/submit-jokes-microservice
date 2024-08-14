@@ -194,7 +194,7 @@ jokeRouter.post("/types/create", createJokeType);
  * /jokes/pending:
  *   get:
  *     summary: Get pending jokes for moderation
- *     description: Retrieve a list of pending jokes.
+ *     description: Retrieve a   pending joke.
  *     tags:
  *       - Jokes
  *     responses:
@@ -203,7 +203,7 @@ jokeRouter.post("/types/create", createJokeType);
  *         content:
  *           application/json:
  *             schema:
- *               type: array
+ *               type: object
  *               items:
  *                 type: object
  *                 properties:
