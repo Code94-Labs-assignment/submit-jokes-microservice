@@ -31,5 +31,7 @@ const PORT = process.env.PORT || "9091";
 app.listen(PORT, () => {
   connect(); // Connect to the database
   logger.info(`Server is running on ${process.env.NEXT_PUBLIC_SUBMIT_SERVICE}`);
-  logger.info(`Swagger docs are available at ${process.env.NEXT_PUBLIC_SUBMIT_SERVICE}/api-docs`);
+  logger.info(
+    `Swagger docs are available at ${process.env.NEXT_PUBLIC_SUBMIT_SERVICE}/api-docs`,
+  );
 });
