@@ -10,7 +10,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: `${process.env.NEXT_PUBLIC_SUBMIT_SERVICE}/api`, // Change to your server URL
+      url: `https://submit-jokes-microservice-production-5d7b.up.railway.app/api`, // Change to your server URL
       description: "Development server",
     },
   ],
